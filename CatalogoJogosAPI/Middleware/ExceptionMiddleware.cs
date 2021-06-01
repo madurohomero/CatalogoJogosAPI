@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace ExemploApiCatalogoJogos.Middleware
 {
@@ -30,7 +29,10 @@ namespace ExemploApiCatalogoJogos.Middleware
         private static async Task HandleExceptionAsync(HttpContext context)
         {
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            await context.Response.WriteAsJsonAsync(new { Message = "Ocorreu um erro durante sua solicitação, por favor, tente novamente mais tarde"});
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(new
+            {
+                message = "Ocorreu um erro durante sua solicitação, por favor, tente novamente mais tarde"
+            }));
         }
     }
 }
